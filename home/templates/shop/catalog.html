@@ -1,0 +1,411 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta_title %}Shop All Sarees | Rangam Saradha Silks{% endblock %}
+{% block title %}Shop All Sarees | Rangam Saradha Silks{% endblock %}
+{% block meta_description %}Browse our complete collection of handwoven pure silk sarees, Kanchipuram sarees, bridal silk sarees, and traditional sarees at Rangam Saradha Silks.{% endblock %}
+{% block meta_keywords %}Shop All Sarees, Rangam Saradha Silks shop, pure silk sarees online, Kanchipuram silk sarees, traditional sarees buy online{% endblock %}
+{% block canonical %}https://rangamsaradhasilks.com/shop/{% endblock %}
+{% block og_url %}https://rangamsaradhasilks.com/shop/{% endblock %}
+{% block og_title %}Shop All Sarees | Rangam Saradha Silks{% endblock %}
+{% block og_description %}Browse our complete collection of handwoven pure silk sarees, Kanchipuram sarees, bridal silk sarees, and traditional sarees at Rangam Saradha Silks.{% endblock %}
+{% block twitter_title %}Shop All Sarees | Rangam Saradha Silks{% endblock %}
+{% block twitter_description %}Browse our complete collection of handwoven pure silk sarees, Kanchipuram sarees, bridal silk sarees, and traditional sarees at Rangam Saradha Silks.{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://rangamsaradhasilks.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Shop All",
+      "item": "https://rangamsaradhasilks.com/shop/"
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+{% if not has_filters %}
+<section class="section-luxury bg-light py-5">
+    <div class="container text-center">
+        <h1 class="font-heading display-4 text-dark mb-0">Our Handloom Catalog</h1>
+        <p class="text-muted mt-2">Explore our premium selection of traditional silk sarees</p>
+    </div>
+</section>
+
+<!-- Premium Luxury Catalog Hero Banner -->
+<section class="catalog-hero-section">
+    <div class="catalog-hero-ornament-left"></div>
+    <div class="catalog-hero-ornament-right"></div>
+    
+    <div class="container">
+        <div class="catalog-hero-card catalog-hero-animate">
+            <div class="row g-0 align-items-center">
+                <!-- Left Column: Content -->
+                <div class="col-lg-7">
+                    <div class="catalog-hero-content">
+                        <!-- Small Label -->
+                        <div class="catalog-hero-badge">
+                            RANGAM SARADHA SILKS
+                        </div>
+
+                        <!-- Main Heading -->
+                        <h2 class="catalog-hero-title">
+                            Discover Timeless Handloom Elegance
+                        </h2>
+
+                        <!-- Gold Accent Divider -->
+                        <div class="catalog-hero-divider">
+                            <div class="catalog-hero-divider-line"></div>
+                            <span class="catalog-hero-divider-symbol">❖</span>
+                            <div class="catalog-hero-divider-line"></div>
+                        </div>
+
+                        <!-- Sub Heading -->
+                        <p class="catalog-hero-subtitle">
+                            Explore our curated collection of pure silk sarees, woven with heritage, artistry, and generations of craftsmanship.
+                        </p>
+
+                        <!-- Luxury Highlights -->
+                        <div class="catalog-hero-highlights">
+                            <div class="catalog-hero-highlight-item">
+                                <div class="catalog-hero-highlight-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+                                <span>Pure Silk</span>
+                            </div>
+                            <div class="catalog-hero-highlight-item">
+                                <div class="catalog-hero-highlight-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+                                <span>Handwoven Heritage</span>
+                            </div>
+                            <div class="catalog-hero-highlight-item">
+                                <div class="catalog-hero-highlight-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+                                <span>Premium Quality</span>
+                            </div>
+                            <div class="catalog-hero-highlight-item">
+                                <div class="catalog-hero-highlight-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+                                <span>Pan India Delivery</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="catalog-hero-actions">
+                            <a href="#catalog-grid" class="btn-catalog-primary">
+                                <span>Explore Collection</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                            <a href="?sort=new#catalog-grid" class="btn-catalog-secondary">
+                                <i class="bi bi-stars"></i>
+                                <span>View New Arrivals</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Saree Model Image -->
+                <div class="col-lg-5">
+                    <div class="catalog-hero-image-wrapper">
+                        <div class="catalog-hero-image-frame">
+                            <img src="{% static 'images/catalog-hero-saree.png' %}" alt="Pure Silk Saree Heritage Collection - Rangam Saradha Silks" loading="eager">
+                            
+                            <div class="catalog-hero-img-badge">
+                                <i class="bi bi-award catalog-hero-img-badge-icon"></i>
+                                <div class="catalog-hero-img-badge-text">
+                                    <h6>100% Certified Pure Silk</h6>
+                                    <span>Handcrafted Kanchipuram Legacy</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<!-- Compact Filtered Navigation Header -->
+<section class="bg-light py-3 border-bottom">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb fs-7 mb-1">
+                <li class="breadcrumb-item"><a href="{% url 'home:index' %}" class="text-decoration-none text-muted">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'shop:catalog' %}" class="text-decoration-none text-muted">Shop</a></li>
+                <li class="breadcrumb-item active text-dark" aria-current="page">
+                    {% if current_filters.q %}
+                        Search Results
+                    {% elif active_category %}
+                        {{ active_category.name }}
+                    {% elif active_collection %}
+                        {{ active_collection.name }}
+                    {% else %}
+                        Filtered Collection
+                    {% endif %}
+                </li>
+            </ol>
+        </nav>
+        <h1 class="font-heading h4 text-dark mb-0">
+            {% if current_filters.q %}
+                Search Results for <span class="text-primary">"{{ current_filters.q }}"</span>
+            {% elif active_category %}
+                <span class="text-primary">{{ active_category.name }}</span> Collection
+            {% elif active_collection %}
+                <span class="text-primary">{{ active_collection.name }}</span> Collection
+            {% else %}
+                Filtered Saree Collection
+            {% endif %}
+        </h1>
+    </div>
+</section>
+{% endif %}
+
+<section id="catalog-grid" class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            
+            <!-- Filter Sidebar -->
+            <div class="col-lg-3">
+                <div class="card border-0 shadow-sm p-4" style="border-radius: 16px;">
+                    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                        <h4 class="font-heading fs-5 mb-0">Filters</h4>
+                        <a href="{% url 'shop:catalog' %}" class="text-decoration-none text-primary fs-7 fw-semibold">Clear All</a>
+                    </div>
+                    
+                    <form action="{% url 'shop:catalog' %}" method="GET">
+                        <!-- Keep search query if active -->
+                        {% if current_filters.q %}
+                        <input type="hidden" name="q" value="{{ current_filters.q }}">
+                        {% endif %}
+                        
+                        <!-- Categories -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold fs-7 text-uppercase text-muted mb-3" style="letter-spacing: 0.08em;">Category</h5>
+                            {% for cat in categories %}
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="category" value="{{ cat.slug }}" id="cat-{{ cat.id }}" {% if current_filters.category == cat.slug %}checked{% endif %} onchange="this.form.submit()">
+                                <label class="form-check-label text-dark fs-7" for="cat-{{ cat.id }}">
+                                    {{ cat.name }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Occasions -->
+                        {% if occasions %}
+                        <div class="mb-4">
+                            <h5 class="fw-bold fs-7 text-uppercase text-muted mb-3" style="letter-spacing: 0.08em;">Occasion</h5>
+                            <select name="occasion" class="form-select fs-7" onchange="this.form.submit()">
+                                <option value="">Select Occasion</option>
+                                {% for o in occasions %}
+                                <option value="{{ o }}" {% if current_filters.occasion == o %}selected{% endif %}>{{ o }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% endif %}
+
+                        <!-- Fabrics -->
+                        {% if fabrics %}
+                        <div class="mb-4">
+                            <h5 class="fw-bold fs-7 text-uppercase text-muted mb-3" style="letter-spacing: 0.08em;">Fabric</h5>
+                            <select name="fabric" class="form-select fs-7" onchange="this.form.submit()">
+                                <option value="">Select Fabric</option>
+                                {% for f in fabrics %}
+                                <option value="{{ f }}" {% if current_filters.fabric == f %}selected{% endif %}>{{ f }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% endif %}
+
+                        <!-- Colors -->
+                        {% if colors %}
+                        <div class="mb-4">
+                            <h5 class="fw-bold fs-7 text-uppercase text-muted mb-3" style="letter-spacing: 0.08em;">Color</h5>
+                            <select name="color" class="form-select fs-7" onchange="this.form.submit()">
+                                <option value="">Select Color</option>
+                                {% for c in colors %}
+                                <option value="{{ c }}" {% if current_filters.color == c %}selected{% endif %}>{{ c }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% endif %}
+
+                        <!-- Dual Price Range Slider Bar -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold fs-7 text-uppercase text-muted mb-3" style="letter-spacing: 0.08em;">Price Range</h5>
+                            <div class="price-range-wrapper">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="price-badge">₹<span id="priceMinDisplay">{{ current_filters.min_price|default:min_catalog_price }}</span></span>
+                                    <span class="text-muted fs-8 fw-semibold">TO</span>
+                                    <span class="price-badge">₹<span id="priceMaxDisplay">{{ current_filters.max_price|default:max_catalog_price }}</span></span>
+                                </div>
+                                
+                                <div class="price-range-slider-container">
+                                    <div class="price-range-track position-absolute top-50 start-0 w-100 translate-middle-y"></div>
+                                    <div class="price-range-selected position-absolute top-50 translate-middle-y" id="priceRangeSelectedTrack"></div>
+                                    <input type="range" class="price-range-input" id="minPriceSlider" min="{{ min_catalog_price }}" max="{{ max_catalog_price }}" step="100" value="{{ current_filters.min_price|default:min_catalog_price }}">
+                                    <input type="range" class="price-range-input" id="maxPriceSlider" min="{{ min_catalog_price }}" max="{{ max_catalog_price }}" step="100" value="{{ current_filters.max_price|default:max_catalog_price }}">
+                                </div>
+
+                                <input type="hidden" name="min_price" id="minPriceInput" value="{{ current_filters.min_price|default:'' }}">
+                                <input type="hidden" name="max_price" id="maxPriceInput" value="{{ current_filters.max_price|default:'' }}">
+
+                                <button class="btn btn-outline-primary w-100 fs-7 mt-2 rounded-pill fw-semibold text-uppercase" type="submit">Apply Price Filter</button>
+                            </div>
+                        </div>
+
+                        <!-- Special Filters -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold fs-7 text-uppercase text-muted mb-3" style="letter-spacing: 0.08em;">Status</h5>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="stock" value="in_stock" id="filter-stock" {% if current_filters.stock == 'in_stock' %}checked{% endif %} onchange="this.form.submit()">
+                                <label class="form-check-label text-dark fs-7" for="filter-stock">
+                                    In Stock Only
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="discount" value="yes" id="filter-discount" {% if current_filters.discount == 'yes' %}checked{% endif %} onchange="this.form.submit()">
+                                <label class="form-check-label text-dark fs-7" for="filter-discount">
+                                    On Discount
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-lg-9">
+                <!-- Sorting & Stats Bar -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 bg-light p-3 rounded-3 gap-2">
+                    <span class="text-muted fs-7">{{ products|length }} Sarees found</span>
+                    
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="sortBy" class="text-muted fs-7 text-nowrap mb-0">Sort By:</label>
+                        <select id="sortBy" class="form-select form-select-sm fs-7 border-0" style="background-color: transparent;" onchange="location = this.value;">
+                            <option value="?{% if current_filters.q %}q={{ current_filters.q }}&{% endif %}{% if current_filters.category %}category={{ current_filters.category }}&{% endif %}sort=new" {% if current_filters.sort == 'new' or not current_filters.sort %}selected{% endif %}>New Arrivals</option>
+                            <option value="?{% if current_filters.q %}q={{ current_filters.q }}&{% endif %}{% if current_filters.category %}category={{ current_filters.category }}&{% endif %}sort=price_low" {% if current_filters.sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                            <option value="?{% if current_filters.q %}q={{ current_filters.q }}&{% endif %}{% if current_filters.category %}category={{ current_filters.category }}&{% endif %}sort=price_high" {% if current_filters.sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                            <option value="?{% if current_filters.q %}q={{ current_filters.q }}&{% endif %}{% if current_filters.category %}category={{ current_filters.category }}&{% endif %}sort=popular" {% if current_filters.sort == 'popular' %}selected{% endif %}>Popularity</option>
+                        </select>
+                    </div>
+                </div>
+
+                {% if products %}
+                <div class="row g-4">
+                    {% for product in products %}
+                    <div class="col-6 col-md-4">
+                        {% include 'shop/components/product_card.html' with product=product %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if products.has_other_pages %}
+                <nav aria-label="Page navigation" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if products.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ products.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in products.paginator.page_range %}
+                        <li class="page-item {% if products.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        
+                        {% if products.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ products.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-inboxes text-muted display-4 mb-3"></i>
+                    <h3 class="font-heading">No Sarees Found</h3>
+                    <p class="text-muted">Try adjusting your filters or search query.</p>
+                    <a href="{% url 'shop:catalog' %}" class="btn btn-primary mt-3">Reset Catalog</a>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const minSlider = document.getElementById("minPriceSlider");
+        const maxSlider = document.getElementById("maxPriceSlider");
+        const minDisplay = document.getElementById("priceMinDisplay");
+        const maxDisplay = document.getElementById("priceMaxDisplay");
+        const minInput = document.getElementById("minPriceInput");
+        const maxInput = document.getElementById("maxPriceInput");
+        const track = document.getElementById("priceRangeSelectedTrack");
+
+        if (!minSlider || !maxSlider) return;
+
+        const minGap = 200;
+        const minRangeVal = parseInt(minSlider.min) || 0;
+        const maxRangeVal = parseInt(maxSlider.max) || 100000;
+
+        function updatePriceSlider(e) {
+            let minVal = parseInt(minSlider.value);
+            let maxVal = parseInt(maxSlider.value);
+
+            if (maxVal - minVal < minGap) {
+                if (e && e.target === minSlider) {
+                    minSlider.value = maxVal - minGap;
+                    minVal = parseInt(minSlider.value);
+                } else if (e && e.target === maxSlider) {
+                    maxSlider.value = minVal + minGap;
+                    maxVal = parseInt(maxSlider.value);
+                }
+            }
+
+            const totalRange = maxRangeVal - minRangeVal;
+            const leftPercent = totalRange > 0 ? ((minVal - minRangeVal) / totalRange) * 100 : 0;
+            const rightPercent = totalRange > 0 ? 100 - (((maxVal - minRangeVal) / totalRange) * 100) : 0;
+
+            if (track) {
+                track.style.left = leftPercent + "%";
+                track.style.right = rightPercent + "%";
+            }
+
+            if (minDisplay) minDisplay.textContent = minVal.toLocaleString('en-IN');
+            if (maxDisplay) maxDisplay.textContent = maxVal.toLocaleString('en-IN');
+            if (minInput) minInput.value = minVal;
+            if (maxInput) maxInput.value = maxVal;
+        }
+
+        minSlider.addEventListener("input", updatePriceSlider);
+        maxSlider.addEventListener("input", updatePriceSlider);
+        updatePriceSlider();
+    });
+</script>
+{% endblock %}

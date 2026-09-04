@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta_title %}My Profile - {{ site_settings.website_name }}{% endblock %}
+
+{% block content %}
+<section class="section-luxury">
+    <div class="container">
+        <h1 class="font-heading display-5 mb-5 text-center">My Account Dashboard</h1>
+        
+        <div class="row g-5">
+            <!-- Navigation Tabs -->
+            <div class="col-md-3">
+                <div class="list-group list-group-flush shadow-sm rounded-4 border-0 overflow-hidden" id="profileTabs" role="tablist">
+                    <button class="list-group-item list-group-item-action active py-3 px-4 border-0" id="profile-details-tab" data-bs-toggle="pill" data-bs-target="#profile-details" type="button" role="tab">
+                        <i class="bi bi-person-bounding-box me-2"></i>Profile Details
+                    </button>
+                    <button class="list-group-item list-group-item-action py-3 px-4 border-0" id="order-history-tab" data-bs-toggle="pill" data-bs-target="#order-history" type="button" role="tab">
+                        <i class="bi bi-receipt me-2"></i>My Orders
+                    </button>
+                    <button class="list-group-item list-group-item-action py-3 px-4 border-0" id="call-bookings-tab" data-bs-toggle="pill" data-bs-target="#call-bookings" type="button" role="tab">
+                        <i class="bi bi-calendar-event me-2"></i>My Call Bookings
+                    </button>
+                    <button class="list-group-item list-group-item-action py-3 px-4 border-0" id="saved-addresses-tab" data-bs-toggle="pill" data-bs-target="#saved-addresses" type="button" role="tab">
+                        <i class="bi bi-geo-alt me-2"></i>Address Book
+                    </button>
+                    <a href="{% url 'accounts:change_password' %}" class="list-group-item list-group-item-action py-3 px-4 border-0">
+                        <i class="bi bi-shield-lock me-2"></i>Security Settings
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Tab Contents -->
+            <div class="col-md-9">
+                <div class="tab-content" id="profileTabsContent">
+                    
+                    <!-- Profile Details -->
+                    <div class="tab-pane fade show active" id="profile-details" role="tabpanel">
+                        <div class="card border border-light p-4 shadow-sm" style="border-radius: 16px;">
+                            <h4 class="font-heading fs-5 mb-4 pb-2 border-bottom">Edit Profile Details</h4>
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row g-4">
+                                    <!-- Avatar Upload Column -->
+                                    <div class="col-md-4 text-center border-end border-light">
+                                        <div class="mb-3 position-relative d-inline-block">
+                                            {% if user.profile_picture %}
+                                                <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}" class="rounded-circle shadow-sm border border-light" style="width: 140px; height: 140px; object-fit: cover; border-width: 4px !important;">
+                                            {% else %}
+                                                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto shadow-sm border border-light" style="width: 140px; height: 140px; border-width: 4px !important;">
+                                                    <i class="bi bi-person text-muted display-4"></i>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="mt-2 px-2">
+                                            <label for="{{ form.profile_picture.id_for_label }}" class="form-label text-muted fs-7 d-block">Profile Photo</label>
+                                            {{ form.profile_picture }}
+                                            {% for error in form.profile_picture.errors %}
+                                            <div class="text-danger fs-8 mt-1">{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Details Input Fields -->
+                                    <div class="col-md-8">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="{{ form.first_name.id_for_label }}" class="form-label text-muted fs-7">First Name</label>
+                                                {{ form.first_name }}
+                                                {% for error in form.first_name.errors %}
+                                                <div class="text-danger fs-8 mt-1">{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="{{ form.last_name.id_for_label }}" class="form-label text-muted fs-7">Last Name</label>
+                                                {{ form.last_name }}
+                                                {% for error in form.last_name.errors %}
+                                                <div class="text-danger fs-8 mt-1">{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="{{ form.email.id_for_label }}" class="form-label text-muted fs-7">Email Address</label>
+                                                {{ form.email }}
+                                                {% for error in form.email.errors %}
+                                                <div class="text-danger fs-8 mt-1">{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="{{ form.phone_number.id_for_label }}" class="form-label text-muted fs-7">Phone Number</label>
+                                                {{ form.phone_number }}
+                                                {% for error in form.phone_number.errors %}
+                                                <div class="text-danger fs-8 mt-1">{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-4 py-2 px-4 rounded-pill text-uppercase fw-semibold fs-7 letter-spacing-1">Save Changes</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    
+                    <!-- Order History -->
+                    <div class="tab-pane fade" id="order-history" role="tabpanel">
+                        <div class="card border border-light p-4 shadow-sm" style="border-radius: 16px;">
+                            <h4 class="font-heading fs-5 mb-4 pb-2 border-bottom">My Order History</h4>
+                            
+                            {% if orders %}
+                            <div class="table-responsive">
+                                <table class="table align-middle">
+                                    <thead>
+                                        <tr class="table-light">
+                                            <th>Order #</th>
+                                            <th>Date</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in orders %}
+                                        <tr>
+                                            <td class="fw-semibold text-dark fs-7">#{{ order.order_number }}</td>
+                                            <td class="text-muted fs-7">{{ order.created_at|date:"d M Y" }}</td>
+                                            <td class="fw-bold fs-7">{{ site_settings.currency }}{{ order.grand_total|floatformat:2 }}</td>
+                                            <td>
+                                                <span class="badge rounded-pill bg-warning text-dark fs-8">
+                                                    {{ order.get_order_status_display }}
+                                                </span>
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="{% url 'shop:order_detail' order.order_number %}" class="btn btn-sm btn-outline-primary px-3 rounded-pill">View Details</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                            <p class="text-muted text-center py-4">You haven't placed any orders yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- My Call Bookings -->
+                    <div class="tab-pane fade" id="call-bookings" role="tabpanel">
+                        <div class="card border border-light p-4 shadow-sm" style="border-radius: 16px;">
+                            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                                <h4 class="font-heading fs-5 mb-0">My Call Bookings</h4>
+                                <a href="{% url 'shop:catalog' %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                    <i class="bi bi-telephone-plus me-1"></i>Book a Call
+                                </a>
+                            </div>
+                            
+                            {% if call_bookings %}
+                            <div class="d-flex flex-column gap-3">
+                                {% for booking in call_bookings %}
+                                <div class="card border border-light p-3 p-md-4 shadow-xs" style="border-radius: 14px; background-color: var(--bs-card-bg, #fff);">
+                                    <div class="row g-3 align-items-center">
+                                        <!-- Product Image -->
+                                        <div class="col-auto">
+                                            <a href="{{ booking.product.get_absolute_url }}" class="d-block overflow-hidden rounded-3 border border-light shadow-sm" style="width: 80px; height: 100px;">
+                                                {% if booking.product.images.exists %}
+                                                <img src="{{ booking.product.images.first.image.url }}" alt="{{ booking.product.name }}" class="w-100 h-100" style="object-fit: cover;">
+                                                {% else %}
+                                                <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center text-muted fs-8">No Image</div>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        
+                                        <!-- Booking & Product Info -->
+                                        <div class="col">
+                                            <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+                                                <div>
+                                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill fs-8 fw-semibold mb-1">
+                                                        Booking ID: #{{ booking.booking_reference }}
+                                                    </span>
+                                                    <h5 class="fw-bold fs-6 mb-1">
+                                                        <a href="{{ booking.product.get_absolute_url }}" class="text-dark text-decoration-none hover-primary">
+                                                            {{ booking.product.name }}
+                                                        </a>
+                                                    </h5>
+                                                    {% if booking.product.sku %}
+                                                    <p class="text-muted fs-8 mb-0">SKU: <span class="fw-medium text-secondary">{{ booking.product.sku }}</span></p>
+                                                    {% endif %}
+                                                </div>
+                                                <div>
+                                                    {% if booking.status == 'CONFIRMED' %}
+                                                        <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-1.5 fs-8 fw-semibold">
+                                                            <i class="bi bi-check-circle me-1"></i>Confirmed
+                                                        </span>
+                                                    {% elif booking.status == 'COMPLETED' %}
+                                                        <span class="badge rounded-pill bg-primary text-white px-3 py-1.5 fs-8 fw-semibold">
+                                                            <i class="bi bi-patch-check me-1"></i>Completed
+                                                        </span>
+                                                    {% elif booking.status == 'CANCELLED' %}
+                                                        <span class="badge rounded-pill bg-danger-subtle text-danger border border-danger-subtle px-3 py-1.5 fs-8 fw-semibold">
+                                                            <i class="bi bi-x-circle me-1"></i>Cancelled
+                                                        </span>
+                                                    {% else %}
+                                                        <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis border border-warning-subtle px-3 py-1.5 fs-8 fw-semibold">
+                                                            <i class="bi bi-clock-history me-1"></i>Pending
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row g-2 pt-2 border-top border-light fs-7 text-muted">
+                                                <div class="col-sm-6 col-md-3">
+                                                    <i class="bi bi-calendar3 me-1 text-primary"></i>
+                                                    <strong class="text-dark">Date:</strong> {{ booking.booking_date|date:"d M Y" }}
+                                                </div>
+                                                <div class="col-sm-6 col-md-4">
+                                                    <i class="bi bi-clock me-1 text-primary"></i>
+                                                    <strong class="text-dark">Time:</strong> {{ booking.time_slot }}
+                                                </div>
+                                                <div class="col-sm-12 col-md-5 text-md-end">
+                                                    <i class="bi bi-info-circle me-1"></i>
+                                                    <span>Booked on: {{ booking.created_at|date:"d M Y, h:i A" }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Actions -->
+                                        <div class="col-12 col-lg-auto text-lg-end mt-2 mt-lg-0 pt-2 pt-lg-0 border-top border-lg-0 border-light d-flex flex-row flex-lg-column gap-2 justify-content-end">
+                                            <a href="{% url 'accounts:booking_detail' booking.booking_reference %}" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1.5 fs-8 fw-semibold text-nowrap">
+                                                <i class="bi bi-eye me-1"></i>View Details
+                                            </a>
+                                            <a href="{{ booking.product.get_absolute_url }}" class="btn btn-sm btn-light rounded-pill px-3 py-1.5 fs-8 fw-semibold text-nowrap">
+                                                <i class="bi bi-box-arrow-up-right me-1"></i>Product Page
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <div class="text-center py-5">
+                                <div class="d-inline-flex align-items-center justify-content-center bg-light text-primary rounded-circle mb-3 shadow-sm" style="width: 70px; height: 70px;">
+                                    <i class="bi bi-calendar-x fs-2"></i>
+                                </div>
+                                <p class="text-muted fs-6 mb-3">You haven't booked any calls yet.</p>
+                                <a href="{% url 'shop:catalog' %}" class="btn btn-primary rounded-pill px-4 py-2 fs-7 fw-semibold">
+                                    <i class="bi bi-telephone-plus me-1"></i>Book a Call
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Saved Addresses -->
+                    <div class="tab-pane fade" id="saved-addresses" role="tabpanel">
+                        <div class="card border border-light p-4 shadow-sm" style="border-radius: 16px;">
+                            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                                <h4 class="font-heading fs-5 mb-0">Delivery Address Book</h4>
+                                <a href="{% url 'accounts:address_add' %}" class="btn btn-sm btn-outline-primary rounded-pill"><i class="bi bi-plus-circle me-1"></i>Add New</a>
+                            </div>
+                            
+                            {% if addresses %}
+                            <div class="row g-4">
+                                {% for addr in addresses %}
+                                <div class="col-md-6">
+                                    <div class="card border p-3" style="border-radius: 12px; {% if addr.is_default %}border-color: var(--secondary-gold) !important; background-color: var(--section-bg);{% endif %}">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold text-dark fs-7">{{ addr.full_name }}</span>
+                                            <span class="badge bg-secondary fs-8">{{ addr.get_address_type_display }}</span>
+                                        </div>
+                                        <p class="text-muted fs-7 mt-2 mb-1">{{ addr.address_line_1 }}</p>
+                                        {% if addr.address_line_2 %}
+                                        <p class="text-muted fs-7 mb-1">{{ addr.address_line_2 }}</p>
+                                        {% endif %}
+                                        <p class="text-muted fs-7 mb-1">{{ addr.city }}, {{ addr.state }} - {{ addr.pincode }}</p>
+                                        <p class="text-muted fs-7 mb-3">Phone: {{ addr.phone_number }}</p>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <a href="{% url 'accounts:address_edit' addr.id %}" class="btn btn-sm btn-light fs-8 px-3 rounded-pill">Edit</a>
+                                            <a href="{% url 'accounts:address_delete' addr.id %}" class="btn btn-sm btn-outline-danger fs-8 px-3 rounded-pill" onclick="return confirm('Are you sure you want to delete this address?');">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <p class="text-muted text-center py-4">No delivery addresses saved yet. Please add an address.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Handle tab switching via URL hash (e.g. #orders, #call-bookings, #bookings, #saved-addresses)
+    document.addEventListener('DOMContentLoaded', function() {
+        const hash = window.location.hash;
+        if (hash) {
+            let targetTab = null;
+            if (hash === '#bookings' || hash === '#call-bookings') {
+                targetTab = document.querySelector('#call-bookings-tab');
+            } else if (hash === '#orders' || hash === '#order-history') {
+                targetTab = document.querySelector('#order-history-tab');
+            } else if (hash === '#addresses' || hash === '#saved-addresses') {
+                targetTab = document.querySelector('#saved-addresses-tab');
+            } else if (hash === '#profile' || hash === '#profile-details') {
+                targetTab = document.querySelector('#profile-details-tab');
+            } else {
+                targetTab = document.querySelector(`button[data-bs-target="${hash}"]`);
+            }
+            if (targetTab) {
+                const tabTrigger = new bootstrap.Tab(targetTab);
+                tabTrigger.show();
+            }
+        }
+    });
+</script>
+{% endblock %}

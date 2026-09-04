@@ -1,0 +1,831 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta_title %}Rangam Saradha Silks | Silk Sarees & Traditional Sarees{% endblock %}
+{% block title %}Rangam Saradha Silks | Silk Sarees & Traditional Sarees{% endblock %}
+{% block meta_description %}Rangam Saradha Silks offers premium silk sarees, traditional sarees and elegant saree collections. Explore our latest collections online.{% endblock %}
+{% block meta_keywords %}Rangam Saradha Silks, Rangam Saradha Silk Sarees, silk sarees, traditional sarees, sarees{% endblock %}
+{% block robots %}index, follow{% endblock %}
+{% block author %}Rangam Saradha Silks{% endblock %}
+{% block canonical %}https://rangamsaradhasilks.com/{% endblock %}
+{% block og_url %}https://rangamsaradhasilks.com/{% endblock %}
+{% block og_title %}Rangam Saradha Silks | Silk Sarees & Traditional Sarees{% endblock %}
+{% block og_description %}Rangam Saradha Silks offers premium silk sarees, traditional sarees and elegant saree collections. Explore our latest collections online.{% endblock %}
+{% block twitter_title %}Rangam Saradha Silks | Silk Sarees & Traditional Sarees{% endblock %}
+{% block twitter_description %}Rangam Saradha Silks offers premium silk sarees, traditional sarees and elegant saree collections. Explore our latest collections online.{% endblock %}
+
+{% block content %}
+<h1 class="visually-hidden">Rangam Saradha Silks</h1>
+<!-- Hero Slider (Bootstrap Carousel) -->
+{% if sliders %}
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for slide in sliders %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <picture>
+                {% if slide.mobile_image %}
+                <source media="(max-width: 767px)" srcset="{{ slide.mobile_image.url }}">
+                {% endif %}
+                <img src="{{ slide.image.url }}" class="d-block w-100" alt="Rangam Saradha Silks - {{ slide.title }}" style="max-height: 650px; object-fit: cover;">
+            </picture>
+            <div class="carousel-caption d-none d-md-block text-start" style="left: 10%; bottom: 25%; max-width: 500px;">
+                <h5 class="section-subtitle">{{ slide.subtitle }}</h5>
+                <h2 class="display-3 font-heading fw-bold text-white mb-4">{{ slide.title }}</h2>
+                <a href="{{ slide.button_url }}" class="btn btn-primary btn-lg">{{ slide.button_text }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if sliders|length > 1 %}
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+    {% endif %}
+</div>
+{% endif %}
+
+<!-- Offer Banners Section -->
+{% if banners %}
+<section class="offer-banners-section py-4 bg-white">
+    <div class="container">
+        <div id="offerBannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+            <div class="carousel-inner rounded-4 shadow-sm">
+                {% for banner in banners %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <a href="{{ banner.link }}" class="offer-banner-card d-block position-relative overflow-hidden">
+                        <div class="offer-banner-img-wrapper">
+                            {% if banner.image %}
+                            <img src="{{ banner.image.url }}" alt="Rangam Saradha Silks Special Offer - {{ banner.title }}" class="w-100 img-fluid offer-zoom-img" loading="lazy">
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% if banners|length > 1 %}
+            <button class="carousel-control-prev" type="button" data-bs-target="#offerBannerCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#offerBannerCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Categories Section (Marquee) -->
+{% if categories %}
+<section id="categories" class="section-luxury py-5 overflow-hidden">
+    <div class="container-fluid px-0">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle">Discover Collections</span>
+            <h2 class="section-title">Traditional Saree Collections</h2>
+        </div>
+        
+        <div class="category-carousel-wrapper">
+            <!-- Left Arrow Button -->
+            <button type="button" class="cat-nav-btn cat-prev-btn" id="catPrevBtn" aria-label="Previous categories">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            
+            <div class="category-carousel-container" id="categoryCarouselContainer">
+                <div class="category-carousel-track" id="categoryCarouselTrack">
+                    <!-- Set 1 -->
+                    {% for cat in categories %}
+                    <div class="category-carousel-item">
+                        <a href="{% url 'shop:catalog' %}?category={{ cat.slug }}" class="category-circle-card">
+                            <div class="category-circle-image">
+                                <img src="{{ cat.image.url }}" alt="Rangam Saradha Silks - {{ cat.name }} Saree Collection">
+                            </div>
+                            <h3>{{ cat.name }}</h3>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    
+                    <!-- Set 2 (Duplicated for Seamless Infinite Loop) -->
+                    {% for cat in categories %}
+                    <div class="category-carousel-item">
+                        <a href="{% url 'shop:catalog' %}?category={{ cat.slug }}" class="category-circle-card">
+                            <div class="category-circle-image">
+                                <img src="{{ cat.image.url }}" alt="Rangam Saradha Silks - {{ cat.name }} Saree Collection">
+                            </div>
+                            <h3>{{ cat.name }}</h3>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    
+                    <!-- Set 3 (Duplicated for Wide Screens) -->
+                    {% for cat in categories %}
+                    <div class="category-carousel-item">
+                        <a href="{% url 'shop:catalog' %}?category={{ cat.slug }}" class="category-circle-card">
+                            <div class="category-circle-image">
+                                <img src="{{ cat.image.url }}" alt="Rangam Saradha Silks - {{ cat.name }} Saree Collection">
+                            </div>
+                            <h3>{{ cat.name }}</h3>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Right Arrow Button -->
+            <button type="button" class="cat-nav-btn cat-next-btn" id="catNextBtn" aria-label="Next categories">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Featured Collections -->
+{% if featured_collections %}
+<section class="section-luxury bg-white py-5">
+    <div class="container">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle text-uppercase tracking-wider">✨ Signature Series</span>
+            <h2 class="section-title font-heading fw-bold">Featured Saree Collections</h2>
+            <div class="gold-accent-line mx-auto mt-2"></div>
+        </div>
+        <div class="row g-4 justify-content-center">
+            {% for col in featured_collections %}
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="collection-card overflow-hidden position-relative shadow-sm rounded-4">
+                    <div class="collection-image-wrapper">
+                        {% if col.image %}
+                        <img src="{{ col.image.url }}" alt="Rangam Saradha Silks - {{ col.name }} Collection" class="w-100 img-fluid collection-zoom-img" loading="lazy">
+                        {% else %}
+                        <img src="{% static 'images/about_offer.jpg' %}" alt="Rangam Saradha Silks - {{ col.name }} Collection" class="w-100 img-fluid collection-zoom-img" loading="lazy">
+                        {% endif %}
+                        <div class="collection-overlay d-flex flex-column justify-content-end p-4">
+                            <h3 class="text-white font-heading mb-2">{{ col.name }}</h3>
+                            <a href="{% url 'shop:catalog' %}?collection={{ col.id }}" class="text-gold text-decoration-none fw-semibold">
+                                Shop Now <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- New Arrivals Section -->
+{% if new_arrivals %}
+<section class="section-luxury bg-luxury py-5 overflow-hidden">
+    {% if new_arrivals|length > 4 %}
+    <div class="container-fluid px-0">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle">💎 Exquisite New Weaves</span>
+            <h2 class="section-title">Our Latest Saree Collection</h2>
+        </div>
+        <div class="product-marquee-wrapper">
+            <button class="carousel-nav-btn prev-btn-float" id="newArrivalsPrev" aria-label="Previous New Arrivals" title="Previous">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button class="carousel-nav-btn next-btn-float" id="newArrivalsNext" aria-label="Next New Arrivals" title="Next">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            <div class="product-marquee-container" id="newArrivalsContainer">
+                <div class="product-marquee-track-ltr" id="newArrivalsTrack">
+                    <!-- Set 1 -->
+                    {% for product in new_arrivals %}
+                    <div class="product-marquee-item">
+                        {% include 'shop/components/product_card.html' with product=product badge_type="new" %}
+                    </div>
+                    {% endfor %}
+                    <!-- Set 2 (Duplicated for Seamless Infinite Loop) -->
+                    {% for product in new_arrivals %}
+                    <div class="product-marquee-item">
+                        {% include 'shop/components/product_card.html' with product=product badge_type="new" %}
+                    </div>
+                    {% endfor %}
+                    <!-- Set 3 (Duplicated for Wide Screens) -->
+                    {% for product in new_arrivals %}
+                    <div class="product-marquee-item">
+                        {% include 'shop/components/product_card.html' with product=product badge_type="new" %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="container">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle">💎 Exquisite New Weaves</span>
+            <h2 class="section-title">Our Latest Saree Collection</h2>
+        </div>
+        <div class="row g-4 justify-content-center row-cols-2 row-cols-md-3 row-cols-lg-4">
+            {% for product in new_arrivals %}
+            <div class="col">
+                {% include 'shop/components/product_card.html' with product=product badge_type="new" %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+
+<!-- Fabric Curations Section (Shop By Material) -->
+{% if fabric_curations %}
+<section class="section-luxury fabric-curation-section py-5">
+    <div class="container">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle text-uppercase tracking-wider">{{ site_settings.fabric_curation_subtitle|default:"SHOP BY MATERIAL" }}</span>
+            <h2 class="section-title font-heading fw-bold">{{ site_settings.fabric_curation_title|default:"Fabric Curations" }}</h2>
+            <div class="gold-accent-line mx-auto mt-2"></div>
+        </div>
+        
+        <div class="row g-4 justify-content-center row-cols-2 row-cols-md-3 row-cols-lg-4">
+            {% for item in fabric_curations %}
+            <div class="col">
+                <a href="{% url 'shop:catalog' %}?fabric={{ item.name }}" class="fabric-curation-card">
+                    <div class="fabric-curation-image-wrapper">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="Rangam Saradha Silks - {{ item.name }} Fabric Saree" class="fabric-curation-img" loading="lazy">
+                        {% else %}
+                        <img src="{% static 'images/about_offer.jpg' %}" alt="Rangam Saradha Silks - {{ item.name }} Fabric Saree" class="fabric-curation-img" loading="lazy">
+                        {% endif %}
+                    </div>
+                    <div class="fabric-curation-overlay">
+                        <h3 class="fabric-curation-title">{{ item.name }}</h3>
+                        <span class="fabric-curation-subtitle-text">Explore Weaves <i class="bi bi-arrow-right ms-1"></i></span>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Best Sellers Section -->
+{% if best_sellers %}
+<section class="section-luxury bg-white py-5 overflow-hidden">
+    {% if best_sellers|length > 4 %}
+    <div class="container-fluid px-0">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle">🔥 Most Loved Masterpieces</span>
+            <h2 class="section-title">Premium Silk Sarees</h2>
+        </div>
+        <div class="product-marquee-wrapper">
+            <button class="carousel-nav-btn prev-btn-float" id="bestSellersPrev" aria-label="Previous Best Sellers" title="Previous">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button class="carousel-nav-btn next-btn-float" id="bestSellersNext" aria-label="Next Best Sellers" title="Next">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            <div class="product-marquee-container" id="bestSellersContainer">
+                <div class="product-marquee-track-rtl" id="bestSellersTrack">
+                    <!-- Set 1 -->
+                    {% for product in best_sellers %}
+                    <div class="product-marquee-item">
+                        {% include 'shop/components/product_card.html' with product=product badge_type="hot" %}
+                    </div>
+                    {% endfor %}
+                    <!-- Set 2 (Duplicated for Seamless Infinite Loop) -->
+                    {% for product in best_sellers %}
+                    <div class="product-marquee-item">
+                        {% include 'shop/components/product_card.html' with product=product badge_type="hot" %}
+                    </div>
+                    {% endfor %}
+                    <!-- Set 3 (Duplicated for Wide Screens) -->
+                    {% for product in best_sellers %}
+                    <div class="product-marquee-item">
+                        {% include 'shop/components/product_card.html' with product=product badge_type="hot" %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="container">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle">🔥 Most Loved Masterpieces</span>
+            <h2 class="section-title">Premium Silk Sarees</h2>
+        </div>
+        <div class="row g-4 justify-content-center row-cols-2 row-cols-md-3 row-cols-lg-4">
+            {% for product in best_sellers %}
+            <div class="col">
+                {% include 'shop/components/product_card.html' with product=product badge_type="hot" %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+
+<!-- Why Choose Us Section -->
+{% if why_choose_us %}
+<section class="section-luxury why-choose-trust-section py-5 position-relative bg-white" id="whyChooseUsSection">
+    <div class="container py-lg-4">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle text-uppercase tracking-wider">{{ site_settings.why_choose_subtitle|default:"THE RANGAM SARADHA PROMISE" }}</span>
+            <h2 class="section-title font-heading fw-bold">{{ site_settings.why_choose_title|default:"Why Choose Us" }}</h2>
+            <div class="gold-accent-line mx-auto mt-2"></div>
+        </div>
+
+        <!-- Desktop & Tablet Layout (Grid: 4 cols on desktop, 2 cols on tablet) -->
+        <div class="row g-4 justify-content-center d-none d-md-flex">
+            {% for item in why_choose_us %}
+            <div class="col-12 col-md-6 col-lg-3 d-flex align-items-stretch">
+                <div class="why-choose-card w-100 p-4 p-xl-4 p-xxl-5 bg-white rounded-4 shadow-sm border text-start d-flex flex-column transition-all">
+                    <div class="why-choose-icon-wrapper mb-4 align-self-center d-flex align-items-center justify-content-center rounded-circle">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}" class="why-choose-custom-icon img-fluid" style="max-width: 38px; max-height: 38px; object-fit: contain;">
+                        {% elif '.png' in item.icon_class or '.jpg' in item.icon_class or '.jpeg' in item.icon_class or '.svg' in item.icon_class or '/' in item.icon_class %}
+                        <img src="{% if item.icon_class|slice:':4' == 'http' or item.icon_class|slice:':1' == '/' %}{{ item.icon_class }}{% else %}{% static item.icon_class %}{% endif %}" alt="{{ item.title }}" class="why-choose-custom-icon img-fluid" style="max-width: 38px; max-height: 38px; object-fit: contain;">
+                        {% else %}
+                        <i class="bi {{ item.icon_class }} fs-2"></i>
+                        {% endif %}
+                    </div>
+                    <h3 class="why-choose-title font-heading mb-2 text-dark">{{ item.title }}</h3>
+                    {% if item.description %}
+                    <p class="why-choose-description text-muted mb-0 fs-6">{{ item.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Mobile Carousel Layout (Horizontal Slider with Navigation Arrows on < 768px) -->
+        <div class="d-block d-md-none position-relative why-choose-mobile-wrapper">
+            <div class="why-choose-mobile-slider" id="whyChooseMobileSlider">
+                {% for item in why_choose_us %}
+                <div class="why-choose-mobile-slide">
+                    <div class="why-choose-card p-4 bg-white rounded-4 shadow-sm border text-start d-flex flex-column h-100 transition-all">
+                        <div class="why-choose-icon-wrapper mb-4 align-self-center d-flex align-items-center justify-content-center rounded-circle">
+                            {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.title }}" class="why-choose-custom-icon img-fluid" style="max-width: 38px; max-height: 38px; object-fit: contain;">
+                            {% elif '.png' in item.icon_class or '.jpg' in item.icon_class or '.jpeg' in item.icon_class or '.svg' in item.icon_class or '/' in item.icon_class %}
+                            <img src="{% if item.icon_class|slice:':4' == 'http' or item.icon_class|slice:':1' == '/' %}{{ item.icon_class }}{% else %}{% static item.icon_class %}{% endif %}" alt="{{ item.title }}" class="why-choose-custom-icon img-fluid" style="max-width: 38px; max-height: 38px; object-fit: contain;">
+                            {% else %}
+                            <i class="bi {{ item.icon_class }} fs-2"></i>
+                            {% endif %}
+                        </div>
+                        <h3 class="why-choose-title font-heading mb-2 text-dark">{{ item.title }}</h3>
+                        {% if item.description %}
+                        <p class="why-choose-description text-muted mb-0 fs-6">{{ item.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Mobile Navigation Controls -->
+            <div class="why-choose-nav-wrapper d-flex justify-content-center align-items-center gap-3 mt-4">
+                <button class="why-choose-nav-btn prev" id="whyChoosePrevBtn" aria-label="Previous Slide">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <div class="why-choose-slider-dots d-flex gap-2 align-items-center" id="whyChooseDots">
+                    {% for item in why_choose_us %}
+                    <span class="why-choose-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}"></span>
+                    {% endfor %}
+                </div>
+                <button class="why-choose-nav-btn next" id="whyChooseNextBtn" aria-label="Next Slide">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Find Your Piece (Shop By Budget) Section -->
+{% if budget_ranges %}
+<section class="section-luxury bg-luxury py-5">
+    <div class="container budget-container">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle">Browse By Value</span>
+            <h2 class="section-title">Find Your Piece</h2>
+            <div class="gold-accent-line mx-auto mt-2"></div>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            {% for range in budget_ranges %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="{% url 'shop:catalog' %}?{% if range.min_price %}min_price={{ range.min_price|floatformat:0 }}{% endif %}{% if range.min_price and range.max_price %}&{% endif %}{% if range.max_price %}max_price={{ range.max_price|floatformat:0 }}{% endif %}" class="text-decoration-none">
+                    <div class="budget-card">
+                        <div class="budget-card-content text-center">
+                            <div class="budget-card-currency">₹</div>
+                            <div class="budget-card-title">{{ range.title }}</div>
+                            <div class="budget-card-explore">
+                                Explore <i class="bi bi-arrow-right ms-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Bridal Collection Banner -->
+<section class="bridal-collection-banner py-5 position-relative overflow-hidden" style="background-image: url('{% if site_settings.bridal_banner_image %}{{ site_settings.bridal_banner_image.url }}{% else %}{% static 'images/about_side.jpg' %}{% endif %}');">
+    <div class="bridal-banner-overlay"></div>
+    <div class="container position-relative z-3 py-5 text-center text-white">
+        <span class="bridal-subtitle text-uppercase tracking-widest mb-3 d-block text-gold">👰 Bridal Collection Banner</span>
+        <h2 class="bridal-title font-heading mb-4 text-white display-4 fw-bold">{{ site_settings.bridal_banner_title|default:"Bridal Collection" }}</h2>
+        <p class="bridal-description mx-auto mb-5 max-w-600 fs-5 text-light">{{ site_settings.bridal_banner_subtitle|default:"Exquisite handcrafted Kanchipuram bridal silk sarees designed for your special day." }}</p>
+        {% if site_settings.bridal_banner_button_url %}
+        <a href="{{ site_settings.bridal_banner_button_url }}" class="btn btn-luxury-maroon px-5 py-3">
+            {{ site_settings.bridal_banner_button_text|default:"Shop Wedding Collection" }}
+        </a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Customer Reviews Section -->
+{% if testimonials %}
+<section class="section-luxury bg-white py-5">
+    <div class="container">
+        <div class="section-heading-wrapper text-center mb-5">
+            <span class="section-subtitle">⭐ Customer Reviews</span>
+            <h2 class="section-title">What Our Patrons Say</h2>
+        </div>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner text-center max-w-600 mx-auto">
+                {% for t in testimonials %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %} p-4">
+                    <div class="mb-3 text-gold">
+                        {% for i in "12345" %}
+                        <i class="bi bi-star-fill"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="fs-4 italic text-dark mb-4">"{{ t.comment }}"</p>
+                    <h5 class="fw-bold mb-1">{{ t.customer_name }}</h5>
+                    <span class="text-muted fs-7">{{ t.role_or_location }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon filter-dark" aria-hidden="true" style="filter: invert(1);"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon filter-dark" aria-hidden="true" style="filter: invert(1);"></span>
+            </button>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Instagram Gallery Section -->
+{% if insta_posts %}
+<section class="section-luxury bg-luxury">
+    <div class="container">
+        <div class="section-heading-wrapper text-center">
+            <span class="section-subtitle">📸 Instagram Gallery</span>
+            <h2 class="section-title">Follow Us @RangamSaradha</h2>
+        </div>
+        <div class="row g-3">
+            {% for post in insta_posts %}
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card border-0 overflow-hidden shadow-sm product-card" style="border-radius: 12px;">
+                    <a href="{{ post.link }}" target="_blank">
+                        <img src="{{ post.image.url }}" alt="Rangam Saradha Silks Instagram Gallery Post" class="w-100 img-fluid" style="aspect-ratio: 1/1; object-fit: cover;">
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Newsletter Section -->
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container py-4">
+        <div class="max-w-600 mx-auto">
+            <h2 class="font-heading display-6 mb-3 text-white">📧 Newsletter</h2>
+            <p class="text-light mb-4">Subscribe to receive updates on our exclusive weaves, festive collections, and secret flash sales.</p>
+            <form class="row g-2 justify-content-center">
+                <div class="col-md-8">
+                    <input type="email" class="form-control rounded-pill border-0 px-4 py-3" placeholder="Enter your email address" required>
+                </div>
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 py-3 w-100">Subscribe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    class MarqueeCarousel {
+        constructor({ container, track, prevBtn, nextBtn, direction = 'ltr', baseSpeed = 0.7 }) {
+            this.container = typeof container === 'string' ? document.querySelector(container) : container;
+            this.track = typeof track === 'string' ? document.querySelector(track) : track;
+            this.prevBtn = typeof prevBtn === 'string' ? document.querySelector(prevBtn) : prevBtn;
+            this.nextBtn = typeof nextBtn === 'string' ? document.querySelector(nextBtn) : nextBtn;
+
+            if (!this.container || !this.track) return;
+
+            this.direction = direction; // 'ltr' (+1) or 'rtl' (-1)
+            this.baseSpeed = baseSpeed;
+            this.currentX = 0;
+            this.targetX = 0;
+            this.isHovered = false;
+            this.isDragging = false;
+            this.startX = 0;
+            this.dragStartX = 0;
+            this.singleSetWidth = 0;
+            this.cardStep = 300;
+            this.animationFrameId = null;
+
+            this.init();
+        }
+
+        init() {
+            // Mark track as JS active to override static CSS keyframe animations
+            this.track.classList.add('js-marquee-active');
+
+            this.calculateSizes();
+
+            // Initial positioning for infinite seamless looping
+            if (this.direction === 'ltr') {
+                this.currentX = -this.singleSetWidth;
+                this.targetX = -this.singleSetWidth;
+            } else {
+                this.currentX = 0;
+                this.targetX = 0;
+            }
+            this.updateTransform();
+
+            this.bindEvents();
+            this.startLoop();
+        }
+
+        calculateSizes() {
+            const items = this.track.querySelectorAll('.product-marquee-item');
+            if (!items.length) return;
+
+            const totalItems = items.length;
+            const itemsPerSet = Math.max(1, Math.floor(totalItems / 3));
+
+            if (items[itemsPerSet] && items[0]) {
+                this.singleSetWidth = items[itemsPerSet].offsetLeft - items[0].offsetLeft;
+            } else {
+                let totalW = 0;
+                for (let i = 0; i < itemsPerSet; i++) {
+                    const style = window.getComputedStyle(items[i]);
+                    totalW += items[i].offsetWidth + parseFloat(style.marginRight || 0);
+                }
+                this.singleSetWidth = totalW;
+            }
+
+            if (items[1] && items[0]) {
+                this.cardStep = items[1].offsetLeft - items[0].offsetLeft;
+            } else if (items[0]) {
+                const style = window.getComputedStyle(items[0]);
+                this.cardStep = items[0].offsetWidth + parseFloat(style.marginRight || 0);
+            }
+        }
+
+        bindEvents() {
+            const wrapper = this.container.closest('.product-marquee-wrapper') || this.container;
+            const hoverElements = [wrapper, this.container, this.prevBtn, this.nextBtn].filter(Boolean);
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => { this.isHovered = true; });
+                el.addEventListener('mouseleave', () => { this.isHovered = false; });
+            });
+
+            if (this.prevBtn) {
+                this.prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.step('prev');
+                });
+            }
+
+            if (this.nextBtn) {
+                this.nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.step('next');
+                });
+            }
+
+            // Mobile Touch Drag Support
+            this.container.addEventListener('touchstart', (e) => {
+                this.isHovered = true;
+                this.isDragging = true;
+                this.startX = e.touches[0].clientX;
+                this.dragStartX = this.currentX;
+            }, { passive: true });
+
+            this.container.addEventListener('touchmove', (e) => {
+                if (!this.isDragging) return;
+                const diff = e.touches[0].clientX - this.startX;
+                this.currentX = this.dragStartX + diff;
+                this.targetX = this.currentX;
+                this.normalizeBounds();
+                this.updateTransform();
+            }, { passive: true });
+
+            const endTouch = () => {
+                if (this.isDragging) {
+                    this.isDragging = false;
+                    setTimeout(() => { this.isHovered = false; }, 800);
+                }
+            };
+            this.container.addEventListener('touchend', endTouch, { passive: true });
+            this.container.addEventListener('touchcancel', endTouch, { passive: true });
+
+            window.addEventListener('resize', () => {
+                this.calculateSizes();
+                this.normalizeBounds();
+            });
+        }
+
+        step(action) {
+            const stepAmount = action === 'next' ? -this.cardStep : this.cardStep;
+            this.targetX += stepAmount;
+        }
+
+        normalizeBounds() {
+            if (!this.singleSetWidth) return;
+
+            while (this.currentX > 0) {
+                this.currentX -= this.singleSetWidth;
+                this.targetX -= this.singleSetWidth;
+            }
+            while (this.currentX < -this.singleSetWidth) {
+                this.currentX += this.singleSetWidth;
+                this.targetX += this.singleSetWidth;
+            }
+        }
+
+        updateTransform() {
+            this.track.style.transform = `translate3d(${this.currentX.toFixed(2)}px, 0, 0)`;
+        }
+
+        startLoop() {
+            const tick = () => {
+                if (!this.isDragging) {
+                    if (!this.isHovered) {
+                        const autoDelta = this.direction === 'ltr' ? this.baseSpeed : -this.baseSpeed;
+                        this.targetX += autoDelta;
+                    }
+
+                    const diff = this.targetX - this.currentX;
+                    if (Math.abs(diff) > 0.05) {
+                        this.currentX += diff * 0.14;
+                    } else {
+                        this.currentX = this.targetX;
+                    }
+
+                    this.normalizeBounds();
+                    this.updateTransform();
+                }
+                this.animationFrameId = requestAnimationFrame(tick);
+            };
+            this.animationFrameId = requestAnimationFrame(tick);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize New Arrivals Carousel (LTR)
+        new MarqueeCarousel({
+            container: '#newArrivalsContainer',
+            track: '#newArrivalsTrack',
+            prevBtn: '#newArrivalsPrev',
+            nextBtn: '#newArrivalsNext',
+            direction: 'ltr',
+            baseSpeed: 0.7
+        });
+
+        // Initialize Best Sellers Carousel (RTL)
+        new MarqueeCarousel({
+            container: '#bestSellersContainer',
+            track: '#bestSellersTrack',
+            prevBtn: '#bestSellersPrev',
+            nextBtn: '#bestSellersNext',
+            direction: 'rtl',
+            baseSpeed: 0.7
+        });
+    });
+
+    // Why Choose Us Mobile Carousel Controls
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.getElementById('whyChooseMobileSlider');
+        const prevBtn = document.getElementById('whyChoosePrevBtn');
+        const nextBtn = document.getElementById('whyChooseNextBtn');
+        const dots = document.querySelectorAll('.why-choose-dot');
+
+        if (slider && prevBtn && nextBtn) {
+            const getSlideWidth = () => {
+                const firstSlide = slider.querySelector('.why-choose-mobile-slide');
+                return firstSlide ? firstSlide.offsetWidth + 20 : slider.clientWidth * 0.88;
+            };
+
+            prevBtn.addEventListener('click', () => {
+                slider.scrollBy({ left: -getSlideWidth(), behavior: 'smooth' });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                slider.scrollBy({ left: getSlideWidth(), behavior: 'smooth' });
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    const slides = slider.querySelectorAll('.why-choose-mobile-slide');
+                    if (slides[index]) {
+                        slides[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }
+                });
+            });
+
+            slider.addEventListener('scroll', () => {
+                const slides = slider.querySelectorAll('.why-choose-mobile-slide');
+                const sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
+                let closestIndex = 0;
+                let minDistance = Infinity;
+
+                slides.forEach((slide, idx) => {
+                    const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+                    const distance = Math.abs(sliderCenter - slideCenter);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = idx;
+                    }
+                });
+
+                dots.forEach((d, i) => {
+                    if (i === closestIndex) {
+                        d.classList.add('active');
+                    } else {
+                        d.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // Category Carousel Navigation Arrows + Auto Scrolling Sync
+        const catPrevBtn = document.getElementById("catPrevBtn");
+        const catNextBtn = document.getElementById("catNextBtn");
+        const catTrack = document.getElementById("categoryCarouselTrack");
+
+        if (catPrevBtn && catNextBtn && catTrack) {
+            function getCurrentTranslateX() {
+                const style = window.getComputedStyle(catTrack);
+                const matrix = new WebKitCSSMatrix(style.transform);
+                return matrix.m41;
+            }
+
+            function manualShift(step) {
+                const currentX = getCurrentTranslateX();
+                let newX = currentX + step;
+                const oneSetWidth = catTrack.scrollWidth / 3;
+
+                catTrack.style.animation = 'none';
+                if (Math.abs(newX) >= oneSetWidth * 2) {
+                    newX = -oneSetWidth;
+                } else if (newX > 0) {
+                    newX = -oneSetWidth;
+                }
+
+                catTrack.style.transform = `translateX(${newX}px)`;
+                catTrack.style.transition = "transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)";
+
+                clearTimeout(catTrack._autoResumeTimer);
+                catTrack._autoResumeTimer = setTimeout(() => {
+                    catTrack.style.transition = 'none';
+                    catTrack.style.animation = 'scroll-categories-carousel 35s linear infinite';
+                }, 2500);
+            }
+
+            catNextBtn.addEventListener("click", function () {
+                manualShift(-280);
+            });
+
+            catPrevBtn.addEventListener("click", function () {
+                manualShift(280);
+            });
+        }
+    });
+</script>
+{% endblock %}
